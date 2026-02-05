@@ -1,7 +1,9 @@
 import mongoose, { connections } from "mongoose";
 import dotenv from "dotenv";
 import User from "../models/userSchema.js";
-import userSeed from "./data.js";
+import JournalEntry from "../models/journalEntrySchema.js";
+import userSeed from "./userData.js";
+import journalEntrySeed from "./journalEntryData.js";
 
 dotenv.config();
 
@@ -14,10 +16,12 @@ async function seedDatabase() {
     console.log("✅ Connected to DB");
 
     await User.deleteMany({});
+    await JournalEntry.deleteMany({});
     console.log("✅ Deleted previous");
 
     await User.create(userSeed);
-    console.log("✅ Added new users");
+    await JournalEntry.create(journalEntrySeed);
+    console.log("✅ Added new users and journal entries");
     
     console.log("🎉 Successfully seeded");
     process.exit(1);

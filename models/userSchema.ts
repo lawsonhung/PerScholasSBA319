@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  entries: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "JournalEntry",
+  }],
 });
 
 userSchema.index({ username: 1 });
