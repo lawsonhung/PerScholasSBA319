@@ -1,20 +1,8 @@
-import mongoose, { Model, Types, Schema } from "mongoose";
-import type { JournalEntryModel } from "./journalEntrySchema.js";
+import mongoose, { Types, Schema } from "mongoose";
+import type { InferSchemaType } from "mongoose";
+import type { JournalEntry } from "./journalEntrySchema.js";
 
-interface User {
-  firstName: string,
-  lastName: string,
-  username: string,
-  entries: [Types.ObjectId]
-};
-
-interface UserMethods {
-  getEntries(): Promise<any>
-};
-
-export type UserModel = Model<User, {}, UserMethods>;
-
-const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
+const userSchema = new Schema({
   firstName: {
     type: String,
     required: true,
@@ -29,7 +17,7 @@ const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
     unique: true,
   },
   entries: [{
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: "JournalEntry",
   }],
 });
@@ -39,7 +27,12 @@ userSchema.index({ username: 1 });
 
 // Instance methods
 userSchema.methods.getEntries = async function () {
-  return await this.populate<{journalEntry: JournalEntryModel}>('entries');
+  return await this.populate('entries');
 };
 
-export default mongoose.model<User, UserModel>("User", userSchema);
+// Automatic type inference ensures User matches schema without having to maintain separate interface and schema definitions
+export type User = InferSchemaType<typeof userSchema> & {
+  getEntries: () => [JournalEntry];
+};
+
+export default mongoose.model<User>("User", userSchema);

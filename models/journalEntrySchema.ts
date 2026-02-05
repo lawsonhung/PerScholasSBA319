@@ -1,17 +1,9 @@
-import mongoose, { Model, Types } from "mongoose";
-
-interface JournalEntry {
-  authorId: Types.ObjectId,
-  content: string,
-  mood: string,
-  moodValue: number,
-}
-
-export type JournalEntryModel = Model<JournalEntry>;
+import mongoose, { Types } from "mongoose";
+import type { InferSchemaType } from "mongoose";
 
 const journalEntrySchema = new mongoose.Schema({
   authorId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User',
   },
   content: {
@@ -31,6 +23,8 @@ const journalEntrySchema = new mongoose.Schema({
     message: '{VALUE} is not valid. Has to be an integer between 0-10 inclusive.',
   },
 }, { timestamps: true });
+
+export type JournalEntry = InferSchemaType<typeof journalEntrySchema>;
 
 journalEntrySchema.index({ createdAt: 1 });
 
