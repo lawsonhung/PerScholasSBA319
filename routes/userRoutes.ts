@@ -14,4 +14,8 @@ router
   .delete(userCTRL.deleteOne)
   .get(userCTRL.getOne);
 
+router
+  .route("/:id/entries")
+  .get(userCTRL.getEntries);
+
 export default router;

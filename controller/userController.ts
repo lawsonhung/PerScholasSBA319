@@ -7,7 +7,7 @@ const createUser: RequestHandler = async (req, res) => {
   res.json(newUser);
 };
 
-const getAll: RequestHandler = async (req, res) => {
+const getAll: RequestHandler = async (_req, res) => {
   let allUsers = await User.find({});
 
   res.json(allUsers);
@@ -44,4 +44,14 @@ const getOne: RequestHandler = async (req, res) => {
   res.json(foundUser);
 };
 
-export default { createUser, getAll, patchOne, deleteOne, getOne };
+const getEntries: RequestHandler = async (req, res) => {
+  let foundUser = await User.findById(req.params.id);
+
+  if (!foundUser) return res.status(404).json({ error: "user not found" });
+
+  let userWithEntries = await foundUser.getEntries();
+
+  res.json(userWithEntries.entries);
+};
+
+export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries };

@@ -1,9 +1,17 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import mongoose, { Model, Types } from "mongoose";
+
+interface JournalEntry {
+  authorId: Types.ObjectId,
+  content: string,
+  mood: string,
+  moodValue: number,
+}
+
+export type JournalEntryModel = Model<JournalEntry>;
 
 const journalEntrySchema = new mongoose.Schema({
-  author: {
-    type: mongoose.Schema.Types.ObjectId, 
+  authorId: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
   content: {

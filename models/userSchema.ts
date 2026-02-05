@@ -1,6 +1,20 @@
-import mongoose from "mongoose";
+import mongoose, { Model, Types, Schema } from "mongoose";
+import type { JournalEntryModel } from "./journalEntrySchema.js";
 
-const userSchema = new mongoose.Schema({
+interface User {
+  firstName: string,
+  lastName: string,
+  username: string,
+  entries: [Types.ObjectId]
+};
+
+interface UserMethods {
+  getEntries(): Promise<any>
+};
+
+export type UserModel = Model<User, {}, UserMethods>;
+
+const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
   firstName: {
     type: String,
     required: true,
@@ -15,11 +29,17 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   entries: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "JournalEntry",
   }],
 });
 
+// Indexes
 userSchema.index({ username: 1 });
 
-export default mongoose.model("User", userSchema);
+// Instance methods
+userSchema.methods.getEntries = async function () {
+  return await this.populate<{journalEntry: JournalEntryModel}>('entries');
+};
+
+export default mongoose.model<User, UserModel>("User", userSchema);
