@@ -2,6 +2,11 @@
 An express app for users to track their mood  
 Express, Mongoose, dotenv, Typescript
 
+### Relationships
+- One user has many journal entries
+- One user has many monthly calendars
+- One monthly calendar has many journal entries
+
 ### How to Run After Cloning
 1. `npm i express mongoose dotenv`
 1. `npm install -D typescript @types/express @types/node ts-node nodemon`
@@ -18,11 +23,17 @@ Express, Mongoose, dotenv, Typescript
 ## API Reference
 VERB | PATH | DESCRIPTION
 -- | -- | --
+| | Users | |
 GET | `/api/users` | Get all users
 POST | `/api/users` | Create new user
 GET | `/api/users/:id` | Get one user
 PATCH | `/api/users/:id` | Update user
 DELETE | `/api/users/:id` | Delete user
-| | | |
+| | Journal Entries | |
+GET | `/api/entries` | Get all journal entries
+POST | `/api/entries` | Create new journal entries
+GET | `/api/entries/:id` | Get one journal entries
+PATCH | `/api/entries/:id` | Update journal entries
+DELETE | `/api/entries/:id` | Delete journal entries
 
 ### Future Considerations
