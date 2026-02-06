@@ -16,6 +16,7 @@ router
 
 router
   .route("/:id/entries")
-  .get(userCTRL.getEntries);
+  .get(userCTRL.getEntries)
+  .post(userCTRL.createEntry);
 
 export default router;

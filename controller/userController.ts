@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
 import User from "../models/userSchema.js";
+import JournalEntry from "../models/journalEntrySchema.js";
 
 const createUser: RequestHandler = async (req, res) => {
   let newUser = await User.insertOne(req.body);
@@ -47,11 +48,29 @@ const getOne: RequestHandler = async (req, res) => {
 const getEntries: RequestHandler = async (req, res) => {
   let foundUser = await User.findById(req.params.id);
 
-  if (!foundUser) return res.status(404).json({ error: "user not found" });
+  if (!foundUser) return res.status(404).json({ error: "User not found" });
 
   let userWithEntries = await foundUser.getEntries();
+
+  console.log(userWithEntries);
 
   res.json(userWithEntries.entries);
 };
 
-export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries };
+const createEntry: RequestHandler = async (req, res) => {
+  let id = req.params.id;
+
+  let foundUser = await User.findById(id);
+
+  if (!foundUser) return res.status(404).json({ error: "User not found"});
+
+  let reqBody = req.body;
+  
+  reqBody.authorId = id;
+
+  let newEntry = await JournalEntry.insertOne(reqBody);
+
+  res.json(newEntry);
+};
+
+export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries, createEntry };

@@ -5,6 +5,13 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(journalEntryCTRL.getAll);
+  .get(journalEntryCTRL.getAll)
+  .post(journalEntryCTRL.createOne);
+
+router
+  .route("/:id")
+  .get(journalEntryCTRL.getOne)
+  .patch(journalEntryCTRL.patchOne)
+  .delete(journalEntryCTRL.deleteOne);
 
 export default router;
