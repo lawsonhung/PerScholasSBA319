@@ -8,8 +8,7 @@ Express, Mongoose, dotenv, Typescript
 - One monthly calendar has many journal entries
 
 ### How to Run After Cloning
-1. `npm i express mongoose dotenv`
-1. `npm install -D typescript @types/express @types/node ts-node nodemon`
+1. `npm i` to install all `package.json` dependencies
 1. `touch .env` and define `MONGO_URI` with your MongoDB connection string and `PORT` with your port number. `PORT` will probably be `3000`
 1. `npx tsc` to compile Typescript
 1. `npm run seed` to seed database with seed data in `./utilities/data.ts`
