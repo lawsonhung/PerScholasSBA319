@@ -65,10 +65,12 @@ const createEntry: RequestHandler = async (req, res) => {
   if (!foundUser) return res.status(404).json({ error: "User not found"});
 
   let reqBody = req.body;
-  
   reqBody.authorId = id;
 
   let newEntry = await JournalEntry.insertOne(reqBody);
+
+  foundUser.entries.push(newEntry._id);
+  await foundUser.save();
 
   res.json(newEntry);
 };

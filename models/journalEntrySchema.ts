@@ -4,7 +4,7 @@ import type { InferSchemaType } from "mongoose";
 const journalEntrySchema = new mongoose.Schema({
   authorId: {
     type: Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true,
   },
   content: {
@@ -14,7 +14,7 @@ const journalEntrySchema = new mongoose.Schema({
     type: String,
     enum: {
       values: ["sad", "neutral", "happy"],
-      message: '\"{VALUE}\" is not supported. Only accepted values are: "sad", "neutral", "happy"',
+      message: '\"{VALUE}\" is not supported. Only accepted values are: "sad", "neutral", "happy" ',
     },
     default: "neutral",
 
