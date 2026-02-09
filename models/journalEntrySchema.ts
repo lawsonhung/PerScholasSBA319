@@ -30,9 +30,14 @@ const journalEntrySchema = new mongoose.Schema({
 }, {
   timestamps: true,
   statics: {
-    getMoodValues
+    getMoodStrings,
+    getMoodValues,
   }
 });
+
+function getMoodStrings(): [String] {
+  return journalEntrySchema.path("mood").options.enum.values;
+};
 
 function getMoodValues(): [Number] {
   return journalEntrySchema.path("moodValue").options.enum.values;

@@ -28,11 +28,17 @@ POST | `/api/users` | Create new user
 GET | `/api/users/:id` | Get one user
 PATCH | `/api/users/:id` | Update user
 DELETE | `/api/users/:id` | Delete user
+GET | `api/users/:id/entries` | Get all journal entries for specified user
+POST | `api/users/:id/entries` | Create new journal entry with the user ID
 | | Journal Entries | |
 GET | `/api/entries` | Get all journal entries
 POST | `/api/entries` | Create new journal entries
 GET | `/api/entries/:id` | Get one journal entries
 PATCH | `/api/entries/:id` | Update journal entries
 DELETE | `/api/entries/:id` | Delete journal entries
+
+## Static Methods
+- `JournalEntry.getMoodStrings()` returns a `[String]` of possible mood strings in the enum
+- `JournalEntry.getMoodValues()` returns a `[Number]` of possible mood values in the enum
 
 ### Future Considerations
