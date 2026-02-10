@@ -28,6 +28,7 @@ const userSchema = new Schema({
       validator: (calendarArray: [Types.ObjectId]) => {
         return calendarArray.length <= 12;
       },
+      message: (props: any) => `${props.path} exceeds the limit of 12 months`,
     },
   },
 });
