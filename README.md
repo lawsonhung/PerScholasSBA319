@@ -36,6 +36,9 @@ POST | `/api/entries` | Create new journal entries
 GET | `/api/entries/:id` | Get one journal entries
 PATCH | `/api/entries/:id` | Update journal entries
 DELETE | `/api/entries/:id` | Delete journal entries
+| | Monthly Calendars | |
+GET | `/api/calendars` | Get all calendars
+GET | `/api/calendars/:id` | Get one calendar
 
 ## Static Methods
 - `JournalEntry.getMoodStrings()` returns a `[String]` of possible mood strings in the enum
