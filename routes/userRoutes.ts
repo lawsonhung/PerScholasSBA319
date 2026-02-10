@@ -19,4 +19,8 @@ router
   .get(userCTRL.getEntries)
   .post(userCTRL.createEntry);
 
+router
+  .route("/:id/calendars")
+  .get(userCTRL.getCalendars);
+
 export default router;

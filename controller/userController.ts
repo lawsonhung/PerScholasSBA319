@@ -53,8 +53,6 @@ const getEntries: RequestHandler = async (req, res) => {
 
   let userWithEntries = await foundUser.getEntries();
 
-  console.log(userWithEntries);
-
   res.json(userWithEntries.entries);
 };
 
@@ -87,7 +85,13 @@ const createEntry: RequestHandler = async (req, res) => {
 };
 
 const getCalendars: RequestHandler = async (req, res) => {
+  let foundUser = await User.findById(req.params.id);
 
+  if (!foundUser) return res.status(404).json({ error: "User not found "});
+
+  let userWithCalendars: any = await foundUser.getCalendars();
+
+  res.json(userWithCalendars.monthlyCalendars);
 };
 
-export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries, createEntry };
+export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries, createEntry, getCalendars };
