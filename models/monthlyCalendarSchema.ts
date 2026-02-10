@@ -27,7 +27,19 @@ const monthlyCalendarSchema = new mongoose.Schema({
       message: (props: any) => `${props.path} exceeds the limit of 31`,
     },
   },
+}, {
+  statics: {
+    getMonthValues,
+  }
 });
+
+// Indexes
+monthlyCalendarSchema.index({ month: 1 });
+
+// Static methods
+function getMonthValues(): [String] {
+  return monthlyCalendarSchema.path("month").options.enum.values;
+};
 
 export type MonthlyCalendar = InferSchemaType<typeof monthlyCalendarSchema>;
 
