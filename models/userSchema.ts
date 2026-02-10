@@ -19,6 +19,17 @@ const userSchema = new Schema({
     type: Types.ObjectId,
     ref: "JournalEntry",
   }],
+  monthlyCalendars: {
+    type: [{
+      type: Types.ObjectId,
+      ref: "MonthlyCalendar",
+    }],
+    validate: {
+      validator: (calendarArray: [Types.ObjectId]) => {
+        return calendarArray.length <= 12;
+      },
+    },
+  },
 });
 
 // Indexes
