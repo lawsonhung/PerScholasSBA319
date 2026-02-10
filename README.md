@@ -2,11 +2,6 @@
 An express app for users to track their mood  
 Express, Mongoose, dotenv, Typescript
 
-### Relationships
-- One user has many journal entries
-- One user has many monthly calendars
-- One monthly calendar has many journal entries
-
 ### How to Run After Cloning
 1. `npm i` to install all `package.json` dependencies
 1. `touch .env` and define `MONGO_URI` with your MongoDB connection string and `PORT` with your port number. `PORT` will probably be `3000`
@@ -18,6 +13,11 @@ Express, Mongoose, dotenv, Typescript
 1. `npx tsc` to recompile Typescript  
 `npx tsc --watch` Use the watch flag to continuously scan for changes so you don't have to run `npx tsc` every time you make changes and want to test the changes
 1. `npm run dev` If server is not already running
+
+### Relationships
+- One user has many journal entries
+- One user has many monthly calendars
+- One monthly calendar has many journal entries
 
 ## API Reference
 VERB | PATH | DESCRIPTION
@@ -39,6 +39,26 @@ DELETE | `/api/entries/:id` | Delete journal entries
 | | Monthly Calendars | |
 GET | `/api/calendars` | Get all calendars
 GET | `/api/calendars/:id` | Get one calendar
+
+## POST Request Body Parameters
+- POST `/api/users`
+ ```
+ {
+  firstName: String, // Required
+  lastName: String, // Required
+  username: String, // Required
+ }
+ ```
+- POST `/api/entries`
+```
+ {
+  content: String, // Optional
+  mood: String, // Optional
+  moodValue: Number, // Optional
+ }
+ ```
+ `mood` only accepts the values "sad", "neutral", "happy"  
+ `moodValue` has to be an integer between 0-10 inclusive
 
 ## Static Methods
 - `JournalEntry.getMoodStrings()` returns a `[String]` of possible mood strings in the enum
