@@ -14,7 +14,6 @@ const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
   },
   entries: [{
     type: Types.ObjectId,
@@ -23,7 +22,7 @@ const userSchema = new Schema({
 });
 
 // Indexes
-userSchema.index({ username: 1 });
+userSchema.index({ username: 1 }, { unique: true });
 
 // Instance methods
 userSchema.methods.getEntries = async function () {

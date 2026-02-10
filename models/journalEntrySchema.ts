@@ -35,6 +35,10 @@ const journalEntrySchema = new mongoose.Schema({
   }
 });
 
+// Indexes
+journalEntrySchema.index({ createdAt: 1 });
+
+// Static methods
 function getMoodStrings(): [String] {
   return journalEntrySchema.path("mood").options.enum.values;
 };
@@ -44,7 +48,5 @@ function getMoodValues(): [Number] {
 };
 
 export type JournalEntry = InferSchemaType<typeof journalEntrySchema>;
-
-journalEntrySchema.index({ createdAt: 1 });
 
 export default mongoose.model("JournalEntry", journalEntrySchema);
