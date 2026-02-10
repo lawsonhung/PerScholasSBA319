@@ -7,6 +7,11 @@ const journalEntrySchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  monthlyCalendarId: {
+    type: Types.ObjectId,
+    ref: "MonthlyCalendar",
+    requied: true,
+  },
   content: {
     type: String,
   },

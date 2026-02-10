@@ -1,6 +1,7 @@
 import mongoose, { Types, Schema } from "mongoose";
 import type { InferSchemaType } from "mongoose";
 import type { JournalEntry } from "./journalEntrySchema.js";
+import type { MonthlyCalendar } from "./monthlyCalendarSchema.js";
 
 const userSchema = new Schema({
   firstName: {
@@ -41,9 +42,14 @@ userSchema.methods.getEntries = async function () {
   return await this.populate('entries');
 };
 
+userSchema.methods.getCalendars = async function () {
+  return await this.populate('monthlyCalendars');
+};
+
 // Automatic type inference ensures User matches schema without having to maintain separate interface and schema definitions
 export type User = InferSchemaType<typeof userSchema> & {
   getEntries: () => [JournalEntry];
+  getCalendars: () => [MonthlyCalendar];
 };
 
 export default mongoose.model<User>("User", userSchema);

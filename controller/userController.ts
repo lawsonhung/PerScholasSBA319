@@ -1,6 +1,7 @@
 import type { RequestHandler } from "express";
 import User from "../models/userSchema.js";
 import JournalEntry from "../models/journalEntrySchema.js";
+import MonthlyCalendar from "../models/monthlyCalendarSchema.js";
 
 const createUser: RequestHandler = async (req, res) => {
   let newUser = await User.insertOne(req.body);
@@ -62,17 +63,31 @@ const createEntry: RequestHandler = async (req, res) => {
 
   let foundUser = await User.findById(id);
 
-  if (!foundUser) return res.status(404).json({ error: "User not found"});
+  if (!foundUser) return res.status(404).json({ error: "User not found" });
 
   let reqBody = req.body;
   reqBody.authorId = id;
+
+  const localeMonth = new Date().toLocaleString("default", { month: "long" });
+  const userWithCalendars: any = await foundUser.getCalendars();
+  const foundCalendarId = userWithCalendars.monthlyCalendars.find((cal: any) => cal.month == localeMonth)._id;
+  reqBody.monthlyCalendarId = foundCalendarId;
 
   let newEntry = await JournalEntry.insertOne(reqBody);
 
   foundUser.entries.push(newEntry._id);
   await foundUser.save();
 
+  let foundCalendar = await MonthlyCalendar.findById(foundCalendarId);
+  if (!foundCalendar) return res.status(404).json({ error: "Calendar not found" });
+  foundCalendar.entries.push(newEntry._id);
+  await foundCalendar.save();
+
   res.json(newEntry);
+};
+
+const getCalendars: RequestHandler = async (req, res) => {
+
 };
 
 export default { createUser, getAll, patchOne, deleteOne, getOne, getEntries, createEntry };

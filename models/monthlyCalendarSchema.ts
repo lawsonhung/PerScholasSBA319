@@ -31,4 +31,4 @@ const monthlyCalendarSchema = new mongoose.Schema({
 
 export type MonthlyCalendar = InferSchemaType<typeof monthlyCalendarSchema>;
 
-export default mongoose.model("MonthlyCalendar", monthlyCalendarSchema);
+export default mongoose.model<MonthlyCalendar>("MonthlyCalendar", monthlyCalendarSchema);
